@@ -1,14 +1,22 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import WorldWind from './components/worldwind-react';
+import WorldWind from './worldwind-react';
 import './App.css';
 
 class App extends Component {
+
+  constructor(props){
+    super(props);
+  }
+
   render() {
     return (
-      <div style={{height: '100%'}} >
-        Map me!
-        <WorldWind/>
+      <div>
+      <script src="%PUBLIC_URL%/worldwind.js"></script>
+        WorldWind should be below
+        <div  style={{height: '100%'}}>
+          <WorldWind/>
+        </div>
       </div>
     );
   }

@@ -1,3 +1,4 @@
+console.log("I'm into worldwind.js");
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         // AMD.
