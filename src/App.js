@@ -5,6 +5,8 @@ import './App.css';
 
 class App extends Component {
 
+  
+
   constructor(props){
     super(props);
   }
@@ -12,11 +14,7 @@ class App extends Component {
   render() {
     return (
       <div>
-      <script src="%PUBLIC_URL%/worldwind.js"></script>
-        WorldWind should be below
-        <div  style={{height: '100%'}}>
           <WorldWind/>
-        </div>
       </div>
     );
   }

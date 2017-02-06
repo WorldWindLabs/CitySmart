@@ -6,8 +6,11 @@ import './index.css';
 // const wwwlib = require('./worldwind.js');
 // (wwwlib());
 
+const worldWindLoader = (
+  <App />
+);
+
 ReactDOM.render(
-  
-  <App />,
+  worldWindLoader, 
   document.getElementById('root')
 );

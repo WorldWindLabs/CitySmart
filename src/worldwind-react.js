@@ -7,14 +7,14 @@ export default class extends Component{
     }
 
     componentDidMount(){
-        //var wwd = new WorldWind.WorldWindow("canvasOne");
-        console.log("Entré a componentDidMount");
+        this.map = new window.WorldWind.WorldWindow("canvasOne");
     }
      
     render() {
         return(
+
             // <canvas id="canvasOne" style="width: 100%; height:100%;">
-            <canvas id="canvasOne" ref="worldwind">
+            <canvas id="canvasOne" ref="canvasOne">
                 Your browser does not support HTML5 Canvas.
             </canvas>
         );
