@@ -1,4 +1,3 @@
-console.log("I'm into worldwind.js");
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         // AMD.
@@ -80438,7 +80437,8 @@ define('WorldWindow',[
             }
 
             // Attempt to get the HTML canvas with the specified name.
-            var canvas = document.getElementById(canvasName);
+            var canvas = canvasName;
+            //var canvas = document.getElementById(canvasName);
             if (!canvas) {
                 throw new ArgumentError(
                     Logger.logMessage(Logger.LEVEL_SEVERE, "WorldWindow", "constructor",
