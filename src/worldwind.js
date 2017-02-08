@@ -7,8 +7,8 @@ export default class extends Component{
     }
 
     componentDidMount(){
-        console.log(this.refs.canvasOne);
-        this.map = new window.WorldWind.WorldWindow(this.refs.canvasOne);
+
+        this.map = new window.WorldWind.WorldWindow(this.refs.canvasOne.id);
         var layers = [
             {layer: new window.WorldWind.BMNGLayer(), enabled: true},
             {layer: new window.WorldWind.BMNGLandsatLayer(), enabled: false},
@@ -25,14 +25,10 @@ export default class extends Component{
             layers[l].layer.enabled = layers[l].enabled;
             this.map.addLayer(layers[l].layer);
         }
-        
-        this.map.redraw();
     }
      
     render() {
         return(
-
-            // <canvas id="canvasOne" style="width: 100%; height:100%;">
             <canvas id="canvasOne" ref="canvasOne">
                 Your browser does not support HTML5 Canvas.
             </canvas>
