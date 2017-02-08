@@ -12,7 +12,10 @@ build
 # misc
 .DS_Store
 .env
+npm-debug.log.*
 npm-debug.log
 
+# other stuff
 clipboardcache
-firefox-dev_root/
+firefox-dev_root
+.vscode
