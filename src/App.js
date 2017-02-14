@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 //import logo from './logo.svg';
-import WorldWind from './worldwind';
+import WorldWind from './WorldwindReact';
 import './App.css';
 
 class App extends Component {
-
-  
 
   constructor(props){
     super(props);
@@ -13,7 +11,7 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div id="myDiv">
           <WorldWind/>
       </div>
     );
