@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
+import AutoScale from 'react-auto-scale';
 
 export default class extends Component{
-    
+
     shouldComponentUpdate(){
         return false;
     }
@@ -26,12 +27,16 @@ export default class extends Component{
             this.map.addLayer(layers[l].layer);
         }
     }
-     
+
     render() {
         return(
-            <canvas id="canvasOne" ref="canvasOne">
-                Your browser does not support HTML5 Canvas.
-            </canvas>
-        );
+            <div>
+                <AutoScale>
+                    <canvas id="canvasOne" ref="canvasOne" style={{height: 500}}>
+                        Your browser does not support HTML5 Canvas.
+                    </canvas>
+                </AutoScale>
+            </div>
+        )
     }
 }

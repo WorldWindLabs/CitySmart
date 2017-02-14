@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-//import logo from './logo.svg';
 import WorldWind from './WorldwindReact';
 import './App.css';
+import AutoScale from 'react-auto-scale';
 
 class App extends Component {
 
@@ -11,9 +11,11 @@ class App extends Component {
 
   render() {
     return (
-      <div id="myDiv">
-          <WorldWind/>
-      </div>
+      
+        <div id="myDiv" class="container">
+            <WorldWind/>
+        </div>
+      
     );
   }
 }
