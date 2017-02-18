@@ -14,10 +14,10 @@ export default function buildGeometries(tile, polygonList, lineList, pointList, 
     var geomList = [];
 
     //color
+    var cutHex = function(h) {return (h.charAt(0)=="#") ? h.substring(1,7):h};
     var hexToR = function(h) {return parseInt((cutHex(h)).substring(0,2),16)};
     var hexToG = function(h) {return parseInt((cutHex(h)).substring(2,4),16)};
     var hexToB = function(h) {return parseInt((cutHex(h)).substring(4,6),16)};
-    var cutHex = function(h) {return (h.charAt(0)=="#") ? h.substring(1,7):h};
 
 
     var getGeom = function(osmId){

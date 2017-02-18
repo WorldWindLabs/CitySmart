@@ -3,11 +3,6 @@ import globals from '../global.js';
 import buildGeometries from './buildGeometries.js';
 
 export default function wwwOSM(wwd, WorldWind, osmLayer) {
-
-    var shapesLayer = new WorldWind.RenderableLayer("wwwOSM");
-    wwd.addLayer(shapesLayer);
-    var _shapeAttributes = new WorldWind.ShapeAttributes(null);
-
     /**
      * APIs Endpoint
      * @type {string}
@@ -216,7 +211,7 @@ export default function wwwOSM(wwd, WorldWind, osmLayer) {
             /**
              * Internal use
              */
-            var do1 = function(tile){
+            var do1 = function(tile){ 
                 storeTile(tile);
                 fun_a(tile);
             }
@@ -338,6 +333,7 @@ export default function wwwOSM(wwd, WorldWind, osmLayer) {
 
     var highlightedItems = [];
     var handlePick = function (o) {
+        console.log("highlight!!!");
         // The input argument is either an Event or a TapRecognizer. Both have the same properties for determining
         // the mouse or tap location.
         var x = o.clientX,
@@ -382,7 +378,8 @@ export default function wwwOSM(wwd, WorldWind, osmLayer) {
             wwd.redraw(); // redraw to make the highlighting changes take effect on the screen
         }
     };
-    //wwd.addEventListener("dbclick", handlePick);
+    
+    wwd.addEventListener("dblclick", handlePick);
 
     /**
      * Canvas in which Web World Wind is embedded
