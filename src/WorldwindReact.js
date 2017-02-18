@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import AutoScale from 'react-auto-scale';
+import wwwOSMLayer from './frontend/wwwOSM.js';
 
 export default class extends Component{
 
@@ -9,16 +10,27 @@ export default class extends Component{
 
     componentDidMount(){
 
-        this.map = new window.WorldWind.WorldWindow(this.refs.canvasOne.id);
+        this.map = new WorldWind.WorldWindow(this.refs.canvasOne.id);
+
+        // update OSM server
+        var osmLayer = new WorldWind.OpenStreetMapImageLayer();
+        osmLayer.urlBuilder = {
+                urlForTile: function(tile, imageFormat) {
+                    return "http://c.tile.osm.org/" +
+                        (tile.level.levelNumber + 1) + "/" + tile.column + "/" + tile.row + ".png";
+                }
+            };
+
         var layers = [
-            {layer: new window.WorldWind.BMNGLayer(), enabled: true},
-            {layer: new window.WorldWind.BMNGLandsatLayer(), enabled: false},
-            {layer: new window.WorldWind.BingAerialLayer(null), enabled: false},
-            {layer: new window.WorldWind.BingAerialWithLabelsLayer(null), enabled: true},
-            {layer: new window.WorldWind.BingRoadsLayer(null), enabled: false},
-            {layer: new window.WorldWind.CompassLayer(), enabled: true},
-            {layer: new window.WorldWind.CoordinatesDisplayLayer(this.map), enabled: true},
-            {layer: new window.WorldWind.ViewControlsLayer(this.map), enabled: true}
+            {layer: osmLayer, enabled: true},
+            {layer: new WorldWind.BMNGLayer(), enabled: false},
+            {layer: new WorldWind.BMNGLandsatLayer(), enabled: false},
+            {layer: new WorldWind.BingAerialLayer(null), enabled: false},
+            {layer: new WorldWind.BingAerialWithLabelsLayer(null), enabled: false},
+            {layer: new WorldWind.BingRoadsLayer(null), enabled: false},
+            {layer: new WorldWind.CompassLayer(), enabled: true},
+            {layer: new WorldWind.CoordinatesDisplayLayer(this.map), enabled: true},
+            {layer: new WorldWind.ViewControlsLayer(this.map), enabled: true}
         ];
 
         // Create those layers.
@@ -26,6 +38,8 @@ export default class extends Component{
             layers[l].layer.enabled = layers[l].enabled;
             this.map.addLayer(layers[l].layer);
         }
+
+       wwwOSMLayer(this.map, window.WorldWind, osmLayer);
     }
 
     render() {
