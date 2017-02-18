@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import AutoScale from 'react-auto-scale';
+//import AutoScale from 'react-auto-scale'; //Might be useful later
 
-export default class extends Component{
+class WorldWind extends Component{
 
     shouldComponentUpdate(){
         return false;
@@ -11,10 +11,10 @@ export default class extends Component{
 
         const WorldWind = window.WorldWind;
 
-        this.map = new WorldWind.WorldWindow(this.refs.canvasOne.id);
+        this.globe = new WorldWind.WorldWindow(this.refs.canvasOne.id);
 
-        var OpenStreetMapsLayer = new WorldWind.OpenStreetMapImageLayer();
-        OpenStreetMapsLayer.urlBuilder = {
+        var OpenStreetMapLayer = new WorldWind.OpenStreetMapImageLayer();
+        OpenStreetMapLayer.urlBuilder = {
             urlForTile: function (tile, imageFormat) {
                     //OSM Tile server only for development purposes, DO NOT use in production.
                     // see tile usage policy: https://operations.osmfoundation.org/policies/tiles/
@@ -23,32 +23,58 @@ export default class extends Component{
             }
         }
 
+        // TODO: Change or remove "Tiles Courtesy of MapQuest" message
 
         var layers = [
             {layer: new WorldWind.BMNGOneImageLayer(), enabled: false},
-            {layer: new WorldWind.BingRoadsLayer(), enabled: true},
-            {layer: OpenStreetMapsLayer, enabled: true},
+            {layer: new WorldWind.BingRoadsLayer(), enabled: false},
+            {layer: OpenStreetMapLayer, enabled: true},
             {layer: new WorldWind.CompassLayer(), enabled: true},
-            {layer: new WorldWind.CoordinatesDisplayLayer(this.map), enabled: true},
-            {layer: new WorldWind.ViewControlsLayer(this.map), enabled: true}
+            {layer: new WorldWind.CoordinatesDisplayLayer(this.globe), enabled: true},
+            {layer: new WorldWind.ViewControlsLayer(this.globe), enabled: true}
         ];
 
         // Create those layers.
         for (var l = 0; l < layers.length; l++) {
             layers[l].layer.enabled = layers[l].enabled;
-            this.map.addLayer(layers[l].layer);
+            this.globe.addLayer(layers[l].layer);
         }
+
+        let {initialCenter, zoom} = this.props;
      }
 
     render() {
+        const style = {
+            width: '100vw',
+            height: '99vh',
+            align: 'center'
+        }
+
         return(
-            <div>
-                <AutoScale>
-                    <canvas id="canvasOne" ref="canvasOne" style={{height: 500}}>
-                        Your browser does not support HTML5 Canvas.
-                    </canvas>
-                </AutoScale>
-            </div>
+            <section>
+                <canvas id="canvasOne" ref="canvasOne" style={style}>
+                    Your browser does not support HTML5 Canvas.
+                </canvas>
+            </section>
         )
     }
 }
+
+WorldWind.propTypes = {
+    worldwind: React.PropTypes.object,
+    zoom: React.PropTypes.number,
+    initialCenter: React.PropTypes.object
+}
+
+WorldWind.defaultProps = {
+    zoom: 15,
+    // Florence by default
+    initialCenter: {
+        lat: 43.7696,
+        lng: 11.2558
+    }
+}
+
+export default WorldWind;
+
+

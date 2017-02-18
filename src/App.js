@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import WorldWind from './WorldwindReact';
-import './App.css';
-import AutoScale from 'react-auto-scale';
+//import './App.css';
 
 class App extends Component {
 
@@ -10,9 +9,16 @@ class App extends Component {
   }
 
   render() {
+
+    const style = {
+      width: '100vw',
+      height: '100vh',
+      alignItems: 'center'
+    }
+
     return (
       
-        <div id="myDiv" class="container">
+        <div style={style}>
             <WorldWind/>
         </div>
       
