@@ -9,16 +9,28 @@ export default class extends Component{
 
     componentDidMount(){
 
-        this.map = new window.WorldWind.WorldWindow(this.refs.canvasOne.id);
+        const WorldWind = window.WorldWind;
+
+        this.map = new WorldWind.WorldWindow(this.refs.canvasOne.id);
+
+        var OpenStreetMapsLayer = new WorldWind.OpenStreetMapImageLayer();
+        OpenStreetMapsLayer.urlBuilder = {
+            urlForTile: function (tile, imageFormat) {
+                    //OSM Tile server only for development purposes, DO NOT use in production.
+                    // see tile usage policy: https://operations.osmfoundation.org/policies/tiles/
+                    return "http://a.tile.openstreetmap.org/" +
+                        (tile.level.levelNumber + 1) + "/" + tile.column + "/" + tile.row + ".png";
+            }
+        }
+
+
         var layers = [
-            {layer: new window.WorldWind.BMNGLayer(), enabled: true},
-            {layer: new window.WorldWind.BMNGLandsatLayer(), enabled: false},
-            {layer: new window.WorldWind.BingAerialLayer(null), enabled: false},
-            {layer: new window.WorldWind.BingAerialWithLabelsLayer(null), enabled: true},
-            {layer: new window.WorldWind.BingRoadsLayer(null), enabled: false},
-            {layer: new window.WorldWind.CompassLayer(), enabled: true},
-            {layer: new window.WorldWind.CoordinatesDisplayLayer(this.map), enabled: true},
-            {layer: new window.WorldWind.ViewControlsLayer(this.map), enabled: true}
+            {layer: new WorldWind.BMNGOneImageLayer(), enabled: false},
+            {layer: new WorldWind.BingRoadsLayer(), enabled: true},
+            {layer: OpenStreetMapsLayer, enabled: true},
+            {layer: new WorldWind.CompassLayer(), enabled: true},
+            {layer: new WorldWind.CoordinatesDisplayLayer(this.map), enabled: true},
+            {layer: new WorldWind.ViewControlsLayer(this.map), enabled: true}
         ];
 
         // Create those layers.
@@ -26,7 +38,7 @@ export default class extends Component{
             layers[l].layer.enabled = layers[l].enabled;
             this.map.addLayer(layers[l].layer);
         }
-    }
+     }
 
     render() {
         return(
