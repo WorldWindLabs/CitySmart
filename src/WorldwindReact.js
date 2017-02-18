@@ -50,17 +50,16 @@ class WorldWind extends Component{
         const style = {
             backgroundColor: '#7887AB',
             //flexDirection: 'column',
-            flexGrow: 1,
+            flexGrow: 1
             //height: '500',
             //flex: 1,
-            align: 'center'
+            //align: 'center'
         }
 
         return(
-
-                <canvas id="canvasOne" ref="canvasOne" style={style}>
-                    Your browser does not support HTML5 Canvas.
-                </canvas>
+            <canvas id="canvasOne" ref="canvasOne" style={style}>
+                Your browser does not support HTML5 Canvas.
+            </canvas>
         )
     }
 }
