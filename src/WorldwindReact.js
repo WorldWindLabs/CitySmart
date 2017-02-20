@@ -15,6 +15,21 @@ class WorldWind extends Component{
         this.globe = new WorldWind.WorldWindow(this.refs.canvasOne.id);
 
         var OpenStreetMapLayer = new WorldWind.OpenStreetMapImageLayer();
+        var BingAerialLayer = new WorldWind.BingAerialLayer();
+
+        // var springfieldConfig = {
+        //     service: 'http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&service=wms&version=1.1.1',
+        //     sector: new WorldWind.Sector(-90, 90, -180, 180),
+        //     levelZeroDelta: new WorldWind.Location(),
+        //     format: 'image/png',
+        //     numLevels: '12',
+        //     size: 193,
+        //     layerNames: 'fireprotectionarea1'
+        // }
+
+        // var SpringfieldWmsLayer = new WorldWind.WmsLayer(springfieldConfig);
+
+
         OpenStreetMapLayer.urlBuilder = {
             urlForTile: function (tile, imageFormat) {
                     //OSM Tile server only for development purposes, DO NOT use in production.
@@ -29,6 +44,8 @@ class WorldWind extends Component{
         var layers = [
             {layer: new WorldWind.BMNGOneImageLayer(), enabled: false},
             {layer: new WorldWind.BingRoadsLayer(), enabled: false},
+            {layer: BingAerialLayer, enabled: false},
+            //{layer: SpringfieldWmsLayer, enabled: false},
             {layer: OpenStreetMapLayer, enabled: true},
             {layer: new WorldWind.CompassLayer(), enabled: true},
             {layer: new WorldWind.CoordinatesDisplayLayer(this.globe), enabled: true},

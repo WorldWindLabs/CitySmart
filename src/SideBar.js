@@ -7,18 +7,29 @@ class SideBar extends Component{
             justifyContent: 'center',
             padding: 20,
             width: 250,
-            height: '50%'
+            height: '95vh'
             //float: 'left',
 
         }
 
-        const headerStyle = {
-            textAlign: 'center'
+        const header = {
+            textAlign: 'center',
+            lineHeight: 0.4,
+            padding: 30
+        }
+
+        const imageStyle = {
+            display: 'block',
+            margin: 'auto',
+            width: 130,
+            align: 'center',
+            // padding: '10%'
         }
     
         return(
             <div style={style}>
-                <h1 style={headerStyle}>CitySmart</h1>
+                <div><img src={require('./DelBiancoLogo.png')} style={imageStyle}/></div>
+                <div style={header}><b>DelBianco</b><br/><h1>CitySmart</h1></div>
                 {/*Placehoder UI elements*/}
                 &emsp;<input></input> <b>Search</b>
                 <br/>
