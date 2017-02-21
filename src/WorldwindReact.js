@@ -63,18 +63,31 @@ class WorldWind extends Component{
             request.send(null);
         }
 
+        // Switch default (and defunct) OSM tile server from MapQuest to OpenStreetMap test servers
         OpenStreetMapLayer.urlBuilder = {
             urlForTile: function (tile, imageFormat) {
                     //OSM Tile server only for development purposes, DO NOT use in production.
-                    // see tile usage policy: https://operations.osmfoundation.org/policies/tiles/
                     return "http://a.tile.openstreetmap.org/" +
                         (tile.level.levelNumber + 1) + "/" + tile.column + "/" + tile.row + ".png";
             }
         }
 
-        // TODO: Change or remove "Tiles Courtesy of MapQuest" message
-        // to Tiles Retrieved from OpenStreetMap DO NOT USE IN PRODUCTION.
-
+        // Render notice of OSM tiles copyright and tile usage policy
+        // see: https://operations.osmfoundation.org/policies/tiles/
+        var dc = this.globe.drawContext;
+        OpenStreetMapLayer.doRender = function(dc){
+            WorldWind.MercatorTiledImageLayer.prototype.doRender.call(this, dc);
+            if(this.inCurrentFrame){
+                dc.screenCreditController.addStringCredit(" ", WorldWind.Color.BLACK);
+                dc.screenCreditController.addStringCredit(" ", WorldWind.Color.BLACK);
+                dc.screenCreditController.addStringCredit("See: https://operations.osmfoundation.org/policies/tiles/", WorldWind.Color.BLACK);
+                dc.screenCreditController.addStringCredit("Do not use OSM Foundation tile servers for production purposes.", WorldWind.Color.BLACK);
+                dc.screenCreditController.addStringCredit("OSM tiles by \u00A9OpenStreetMap. ", WorldWind.Color.BLACK);
+            }
+        
+        }
+        
+        // Create WorldWind's layers
         var layers = [
             {layer: new WorldWind.BMNGOneImageLayer(), enabled: false},
             {layer: new WorldWind.BingRoadsLayer(), enabled: false},
@@ -85,17 +98,19 @@ class WorldWind extends Component{
             {layer: new WorldWind.ViewControlsLayer(this.globe), enabled: true}
         ];
 
-        // Create those layers.
+        // Create layers.
         for (var l = 0; l < layers.length; l++) {
             layers[l].layer.enabled = layers[l].enabled;
             this.globe.addLayer(layers[l].layer);
         }
 
+        // Create Springfield layer from WMS
         getXMLDom(this.globe, serverAddress);
 
-       //wwwOSMLayer(this.globe, WorldWind, OpenStreetMapLayer);
+        // Create 3D buildings
+        //wwwOSMLayer(this.globe, WorldWind, OpenStreetMapLayer);
 
-       let {initialCenter, zoom} = this.props;
+        //let {initialCenter, zoom} = this.props;
      }
 
     render() {
