@@ -3,6 +3,7 @@ import wwwOSMLayer from './frontend/wwwOSM.js';
 //import AutoScale from 'react-auto-scale'; //Might be useful later
 
 class WorldWind extends Component{
+    
 
     shouldComponentUpdate(){
         return false;
@@ -16,6 +17,68 @@ class WorldWind extends Component{
 
         var OpenStreetMapLayer = new WorldWind.OpenStreetMapImageLayer();
         var BingAerialLayer = new WorldWind.BingAerialLayer();
+        var serverAddress = 'http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map';
+
+
+        //function resolveAfter2Seconds(x) {   return new Promise(resolve => {setTimeout(() => {resolve(x);}, 2000);}); }
+
+        function getXMLDom () {
+            if (!serverAddress) {
+                return;
+            }
+
+            serverAddress = serverAddress.trim();
+
+            serverAddress = serverAddress.replace("Http", "http");
+            if (serverAddress.lastIndexOf("http", 0) != 0) {
+                serverAddress = "http://" + serverAddress;
+            }
+
+            var thisExplorer = this,
+                request = new XMLHttpRequest(),
+                url = WorldWind.WmsUrlBuilder.fixGetMapString(serverAddress);
+
+            url += "service=WMS&request=GetCapabilities&vers";
+
+            request.open("GET", url, true);
+            request.onreadystatechange = function () {
+                //console.log(request);
+                if (request.readyState === 4 && request.status === 200) {
+                    
+                    var xmlDom = request.responseXML;
+                    
+                    if (!xmlDom && request.responseText.indexOf("<?xml") === 0) {
+                        xmlDom = new window.DOMParser().parseFromString(request.responseText, "text/xml");
+                    
+                    }
+
+                    if (!xmlDom) {
+                        alert(serverAddress + " retrieval failed. It is probably not a WMS server.");
+                        return;
+                    }
+
+                    var wmsCapsDoc = new WorldWind.WmsCapabilities(xmlDom);
+                    console.log(wmsCapsDoc);
+                    var SpringfieldWmsLayer = {layer: new WorldWind.WmsLayer(wmsCapsDoc), enabled: true};
+                    console.log('Im here2');
+                    console.log(SpringfieldWmsLayer);
+                    this.globe.addLayer(SpringfieldWmsLayer);
+
+
+                } else if (request.readyState === 4) {
+                    if (request.statusText) {
+                        alert(request.responseURL + " " + request.status + " (" + request.statusText + ")");
+                    } else {
+                        alert("Failed to retrieve WMS capabilities from " + serverAddress + ".");
+                    }
+                }
+
+                return xmlDom;
+            };
+
+            request.send(null);
+
+        }
 
         // var springfieldConfig = {
         //     service: 'http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&service=wms&version=1.1.1',
@@ -27,7 +90,8 @@ class WorldWind extends Component{
         //     layerNames: 'fireprotectionarea1'
         // }
 
-        // var SpringfieldWmsLayer = new WorldWind.WmsLayer(springfieldConfig);
+        // var wmsCapsDoc = new WorldWind.WmsCapabilities(xmlDom);
+        // var SpringfieldWmsLayer = new WorldWind.WmsLayer(wmsCapsDoc);
 
 
         OpenStreetMapLayer.urlBuilder = {
@@ -45,7 +109,7 @@ class WorldWind extends Component{
             {layer: new WorldWind.BMNGOneImageLayer(), enabled: false},
             {layer: new WorldWind.BingRoadsLayer(), enabled: false},
             {layer: BingAerialLayer, enabled: false},
-            //{layer: SpringfieldWmsLayer, enabled: false},
+            // {layer: SpringfieldWmsLayer, enabled: false},
             {layer: OpenStreetMapLayer, enabled: true},
             {layer: new WorldWind.CompassLayer(), enabled: true},
             {layer: new WorldWind.CoordinatesDisplayLayer(this.globe), enabled: true},
@@ -58,7 +122,9 @@ class WorldWind extends Component{
             this.globe.addLayer(layers[l].layer);
         }
 
-       wwwOSMLayer(this.globe, WorldWind, OpenStreetMapLayer);
+        getXMLDom();
+
+       //wwwOSMLayer(this.globe, WorldWind, OpenStreetMapLayer);
 
        let {initialCenter, zoom} = this.props;
      }
