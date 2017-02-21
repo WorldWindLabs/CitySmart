@@ -19,10 +19,7 @@ class WorldWind extends Component{
         var BingAerialLayer = new WorldWind.BingAerialLayer();
         var serverAddress = 'http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map';
 
-
-        //function resolveAfter2Seconds(x) {   return new Promise(resolve => {setTimeout(() => {resolve(x);}, 2000);}); }
-
-        function getXMLDom () {
+        function getXMLDom (globe, serverAddress) { // Asynchronously adding layers from Sprinfield's WMS
             if (!serverAddress) {
                 return;
             }
@@ -42,57 +39,29 @@ class WorldWind extends Component{
 
             request.open("GET", url, true);
             request.onreadystatechange = function () {
-                //console.log(request);
                 if (request.readyState === 4 && request.status === 200) {
                     
                     var xmlDom = request.responseXML;
                     
                     if (!xmlDom && request.responseText.indexOf("<?xml") === 0) {
                         xmlDom = new window.DOMParser().parseFromString(request.responseText, "text/xml");
-                    
+                        var wmsCapsDoc = new WorldWind.WmsCapabilities(xmlDom);
+                        var layerCaps = wmsCapsDoc.capability.layers[0].layers[3];
+                        //console.log(layerCaps);
+                        var config = WorldWind.WmsLayer.formLayerConfiguration(layerCaps, null);
+                        var SpringfieldWmsLayer = {layer: new WorldWind.WmsLayer(config, null), enabled: true};
+                        //console.log(SpringfieldWmsLayer);
+                        SpringfieldWmsLayer.layer.enabled = SpringfieldWmsLayer.enabled;
+                        globe.addLayer(SpringfieldWmsLayer.layer);
                     }
-
                     if (!xmlDom) {
                         alert(serverAddress + " retrieval failed. It is probably not a WMS server.");
                         return;
                     }
-
-                    var wmsCapsDoc = new WorldWind.WmsCapabilities(xmlDom);
-                    console.log(wmsCapsDoc);
-                    var SpringfieldWmsLayer = {layer: new WorldWind.WmsLayer(wmsCapsDoc), enabled: true};
-                    console.log('Im here2');
-                    console.log(SpringfieldWmsLayer);
-                    this.globe.addLayer(SpringfieldWmsLayer);
-
-
-                } else if (request.readyState === 4) {
-                    if (request.statusText) {
-                        alert(request.responseURL + " " + request.status + " (" + request.statusText + ")");
-                    } else {
-                        alert("Failed to retrieve WMS capabilities from " + serverAddress + ".");
-                    }
-                }
-
-                return xmlDom;
+                } 
             };
-
             request.send(null);
-
         }
-
-        // var springfieldConfig = {
-        //     service: 'http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&service=wms&version=1.1.1',
-        //     sector: new WorldWind.Sector(-90, 90, -180, 180),
-        //     levelZeroDelta: new WorldWind.Location(),
-        //     format: 'image/png',
-        //     numLevels: '12',
-        //     size: 193,
-        //     layerNames: 'fireprotectionarea1'
-        // }
-
-        // var wmsCapsDoc = new WorldWind.WmsCapabilities(xmlDom);
-        // var SpringfieldWmsLayer = new WorldWind.WmsLayer(wmsCapsDoc);
-
 
         OpenStreetMapLayer.urlBuilder = {
             urlForTile: function (tile, imageFormat) {
@@ -104,12 +73,12 @@ class WorldWind extends Component{
         }
 
         // TODO: Change or remove "Tiles Courtesy of MapQuest" message
+        // to Tiles Retrieved from OpenStreetMap DO NOT USE IN PRODUCTION.
 
         var layers = [
             {layer: new WorldWind.BMNGOneImageLayer(), enabled: false},
             {layer: new WorldWind.BingRoadsLayer(), enabled: false},
             {layer: BingAerialLayer, enabled: false},
-            // {layer: SpringfieldWmsLayer, enabled: false},
             {layer: OpenStreetMapLayer, enabled: true},
             {layer: new WorldWind.CompassLayer(), enabled: true},
             {layer: new WorldWind.CoordinatesDisplayLayer(this.globe), enabled: true},
@@ -122,7 +91,7 @@ class WorldWind extends Component{
             this.globe.addLayer(layers[l].layer);
         }
 
-        getXMLDom();
+        getXMLDom(this.globe, serverAddress);
 
        //wwwOSMLayer(this.globe, WorldWind, OpenStreetMapLayer);
 

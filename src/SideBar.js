@@ -36,7 +36,7 @@ class SideBar extends Component{
                 <h3>
                     <p>&emsp;+ Layers</p>
                     <h5>&emsp;&emsp; OpenStreetMap</h5>
-                    <h5>&emsp;&emsp; Trento 3D Buildings</h5>
+                    <h5>&emsp;&emsp; Springfield Fire Reporting</h5>
                     <br/>
                     <p>&emsp;+ Servers</p>
                 </h3>
