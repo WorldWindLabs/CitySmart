@@ -1,0 +1,728 @@
+<?xml version='1.0' encoding="UTF-8" standalone="no" ?>
+<WMS_Capabilities version="1.3.0"  xmlns="http://www.opengis.net/wms"   xmlns:sld="http://www.opengis.net/sld"   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   xmlns:ms="http://mapserver.gis.umn.edu/mapserver"   xsi:schemaLocation="http://www.opengis.net/wms http://schemas.opengis.net/wms/1.3.0/capabilities_1_3_0.xsd  http://www.opengis.net/sld http://schemas.opengis.net/sld/1.1.0/sld_capabilities.xsd  http://mapserver.gis.umn.edu/mapserver http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;service=WMS&amp;version=1.3.0&amp;request=GetSchemaExtension">
+
+<!-- MapServer version 7.0.2 OUTPUT=PNG OUTPUT=JPEG SUPPORTS=PROJ SUPPORTS=AGG SUPPORTS=FREETYPE SUPPORTS=ICONV SUPPORTS=WMS_SERVER SUPPORTS=WMS_CLIENT SUPPORTS=WFS_SERVER SUPPORTS=WFS_CLIENT SUPPORTS=WCS_SERVER SUPPORTS=SOS_SERVER SUPPORTS=GEOS INPUT=JPEG INPUT=POSTGIS INPUT=OGR INPUT=GDAL INPUT=SHAPEFILE -->
+
+<Service>
+  <Name>WMS</Name>
+  <Title>Springfield-Eugene PSAP Data</Title>
+  <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;"/>
+  <ContactInformation>
+  </ContactInformation>
+  <MaxWidth>2048</MaxWidth>
+  <MaxHeight>2048</MaxHeight>
+</Service>
+
+<Capability>
+  <Request>
+    <GetCapabilities>
+      <Format>text/xml</Format>
+      <DCPType>
+        <HTTP>
+          <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;"/></Get>
+          <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;"/></Post>
+        </HTTP>
+      </DCPType>
+    </GetCapabilities>
+    <GetMap>
+      <Format>image/png</Format>
+      <Format>image/jpeg</Format>
+      <Format>image/png; mode=8bit</Format>
+      <Format>image/tiff</Format>
+      <DCPType>
+        <HTTP>
+          <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;"/></Get>
+          <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;"/></Post>
+        </HTTP>
+      </DCPType>
+    </GetMap>
+    <GetFeatureInfo>
+      <Format>text/plain</Format>
+      <Format>application/vnd.ogc.gml</Format>
+      <DCPType>
+        <HTTP>
+          <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;"/></Get>
+          <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;"/></Post>
+        </HTTP>
+      </DCPType>
+    </GetFeatureInfo>
+    <sld:DescribeLayer>
+      <Format>text/xml</Format>
+      <DCPType>
+        <HTTP>
+          <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;"/></Get>
+          <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;"/></Post>
+        </HTTP>
+      </DCPType>
+    </sld:DescribeLayer>
+    <sld:GetLegendGraphic>
+      <Format>image/png</Format>
+      <Format>image/jpeg</Format>
+      <Format>image/png; mode=8bit</Format>
+      <DCPType>
+        <HTTP>
+          <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;"/></Get>
+          <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;"/></Post>
+        </HTTP>
+      </DCPType>
+    </sld:GetLegendGraphic>
+    <ms:GetStyles>
+      <Format>text/xml</Format>
+      <DCPType>
+        <HTTP>
+          <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;"/></Get>
+          <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;"/></Post>
+        </HTTP>
+      </DCPType>
+    </ms:GetStyles>
+  </Request>
+  <Exception>
+    <Format>XML</Format>
+    <Format>INIMAGE</Format>
+    <Format>BLANK</Format>
+  </Exception>
+  <sld:UserDefinedSymbolization SupportSLD="1" UserLayer="0" UserStyle="1" RemoteWFS="0" InlineFeature="0" RemoteWCS="0"/>
+  <Layer>
+    <Name>MS</Name>
+    <Title>Springfield-Eugene PSAP Data</Title>
+    <Abstract>MS</Abstract>
+    <CRS>EPSG:4326</CRS>
+    <EX_GeographicBoundingBox>
+        <westBoundLongitude>-123.1</westBoundLongitude>
+        <eastBoundLongitude>-122.905</eastBoundLongitude>
+        <southBoundLatitude>44.0132</southBoundLatitude>
+        <northBoundLatitude>44.1088</northBoundLatitude>
+    </EX_GeographicBoundingBox>
+    <BoundingBox CRS="EPSG:4326"
+                minx="44.0132" miny="-123.1" maxx="44.1088" maxy="-122.905" />
+    <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>firestation</Name>
+        <Title>Fire Station</Title>
+        <CRS>EPSG:2270</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-124.139</westBoundLongitude>
+            <eastBoundLongitude>-122.144</eastBoundLongitude>
+            <southBoundLatitude>43.7072</southBoundLatitude>
+            <northBoundLatitude>44.3881</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:2270"
+                    minx="3.96941e+06" miny="764148" maxx="4.48685e+06" maxy="996213" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="101" height="20">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=firestation&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Hospital</Name>
+        <Title>Hospitals</Title>
+        <CRS>EPSG:2270</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-124.122</westBoundLongitude>
+            <eastBoundLongitude>-122.994</eastBoundLongitude>
+            <southBoundLatitude>43.7757</southBoundLatitude>
+            <northBoundLatitude>44.0818</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:2270"
+                    minx="3.96922e+06" miny="789143" maxx="4.26307e+06" maxy="890072" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="83" height="23">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Hospital&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Schools</Name>
+        <Title>Schools</Title>
+        <CRS>EPSG:2270</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-124.119</westBoundLongitude>
+            <eastBoundLongitude>-122.347</eastBoundLongitude>
+            <southBoundLatitude>43.6224</southBoundLatitude>
+            <northBoundLatitude>44.2432</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:2270"
+                    minx="3.97252e+06" miny="733072" maxx="4.43244e+06" maxy="944511" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="80" height="20">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Schools&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>clpsap.fire_reporting_areas</Name>
+        <Title>Fire Reporting Areas</Title>
+        <CRS>EPSG:2270</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-124.198</westBoundLongitude>
+            <eastBoundLongitude>-121.753</eastBoundLongitude>
+            <southBoundLatitude>43.3946</southBoundLatitude>
+            <northBoundLatitude>44.4973</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:2270"
+                    minx="3.95575e+06" miny="650674" maxx="4.58841e+06" maxy="1.03425e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="155" height="23">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=clpsap.fire_reporting_areas&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>clpsap.fire_response_plan_areas</Name>
+        <Title>Fire Response Plan Areas</Title>
+        <CRS>EPSG:2270</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-124.198</westBoundLongitude>
+            <eastBoundLongitude>-121.753</eastBoundLongitude>
+            <southBoundLatitude>43.3946</southBoundLatitude>
+            <northBoundLatitude>44.4973</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:2270"
+                    minx="3.95575e+06" miny="650674" maxx="4.58841e+06" maxy="1.03425e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="183" height="23">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=clpsap.fire_response_plan_areas&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>clpsap.fire_district</Name>
+        <Title>Fire Districts</Title>
+        <CRS>EPSG:2270</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-124.259</westBoundLongitude>
+            <eastBoundLongitude>-121.752</eastBoundLongitude>
+            <southBoundLatitude>43.272</southBoundLatitude>
+            <northBoundLatitude>44.3269</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:2270"
+                    minx="3.93694e+06" miny="606789" maxx="4.58818e+06" maxy="972127" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="109" height="20">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=clpsap.fire_district&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>clpsap.fire_geo_proximity</Name>
+        <Title>Fire GeoProximity</Title>
+        <CRS>EPSG:2270</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-124.27</westBoundLongitude>
+            <eastBoundLongitude>-121.751</eastBoundLongitude>
+            <southBoundLatitude>43.272</southBoundLatitude>
+            <northBoundLatitude>44.4973</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:2270"
+                    minx="3.93694e+06" miny="606789" maxx="4.58841e+06" maxy="1.03425e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="139" height="23">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=clpsap.fire_geo_proximity&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>clpsap.fire_station</Name>
+        <Title>Fire Station Polygons</Title>
+        <CRS>EPSG:2270</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-124.27</westBoundLongitude>
+            <eastBoundLongitude>-121.751</eastBoundLongitude>
+            <southBoundLatitude>43.272</southBoundLatitude>
+            <northBoundLatitude>44.4973</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:2270"
+                    minx="3.93694e+06" miny="606789" maxx="4.58841e+06" maxy="1.03425e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="158" height="23">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=clpsap.fire_station&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>clpsap.fire_agency</Name>
+        <Title>Fire Agency</Title>
+        <CRS>EPSG:2270</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-124.27</westBoundLongitude>
+            <eastBoundLongitude>-121.751</eastBoundLongitude>
+            <southBoundLatitude>43.272</southBoundLatitude>
+            <northBoundLatitude>44.4973</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:2270"
+                    minx="3.93694e+06" miny="606789" maxx="4.58841e+06" maxy="1.03425e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="104" height="23">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=clpsap.fire_agency&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+<!-- WARNING: The layer name 'Landmark Test' might contain spaces or invalid characters or may start with a number. This could lead to potential problems. -->
+        <Name>Landmark Test</Name>
+        <Title>Landmark</Title>
+        <CRS>EPSG:2270</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-123.047</westBoundLongitude>
+            <eastBoundLongitude>-122.917</eastBoundLongitude>
+            <southBoundLatitude>44.0049</southBoundLatitude>
+            <northBoundLatitude>44.0914</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:2270"
+                    minx="4.25214e+06" miny="862349" maxx="4.28529e+06" maxy="892909" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="94" height="20">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Landmark Test&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>site_addrress</Name>
+        <Title>Address</Title>
+        <CRS>EPSG:2270</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-123.072</westBoundLongitude>
+            <eastBoundLongitude>-122.806</eastBoundLongitude>
+            <southBoundLatitude>43.9444</southBoundLatitude>
+            <northBoundLatitude>44.1375</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:2270"
+                    minx="4.24608e+06" miny="840470" maxx="4.31405e+06" maxy="908906" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="108" height="20">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=site_addrress&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>taxlots</Name>
+        <Title>Taxlot</Title>
+        <CRS>EPSG:2270</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-124.184</westBoundLongitude>
+            <eastBoundLongitude>-121.754</eastBoundLongitude>
+            <southBoundLatitude>43.3945</southBoundLatitude>
+            <northBoundLatitude>44.3268</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:2270"
+                    minx="3.95651e+06" miny="650607" maxx="4.58818e+06" maxy="972070" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="77" height="20">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=taxlots&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>clpsap.law_geo_proximity</Name>
+        <Title>Law Geoproximity</Title>
+        <CRS>EPSG:2270</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-124.27</westBoundLongitude>
+            <eastBoundLongitude>-121.751</eastBoundLongitude>
+            <southBoundLatitude>43.272</southBoundLatitude>
+            <northBoundLatitude>44.4973</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:2270"
+                    minx="3.93694e+06" miny="606789" maxx="4.58841e+06" maxy="1.03425e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="141" height="23">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=clpsap.law_geo_proximity&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>clpsap.law_reporting_areas</Name>
+        <Title>Law Reporting Areas</Title>
+        <CRS>EPSG:2270</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-124.198</westBoundLongitude>
+            <eastBoundLongitude>-121.753</eastBoundLongitude>
+            <southBoundLatitude>43.3946</southBoundLatitude>
+            <northBoundLatitude>44.4973</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:2270"
+                    minx="3.95575e+06" miny="650674" maxx="4.58841e+06" maxy="1.03425e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="156" height="23">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=clpsap.law_reporting_areas&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>clpsap.law_agency</Name>
+        <Title>Law Agency</Title>
+        <CRS>EPSG:2270</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-124.27</westBoundLongitude>
+            <eastBoundLongitude>-121.751</eastBoundLongitude>
+            <southBoundLatitude>43.272</southBoundLatitude>
+            <northBoundLatitude>44.4973</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:2270"
+                    minx="3.93694e+06" miny="606789" maxx="4.58841e+06" maxy="1.03425e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="105" height="22">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=clpsap.law_agency&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>clpsap.law_district</Name>
+        <Title>Law Districts</Title>
+        <CRS>EPSG:2270</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-124.27</westBoundLongitude>
+            <eastBoundLongitude>-121.751</eastBoundLongitude>
+            <southBoundLatitude>43.272</southBoundLatitude>
+            <northBoundLatitude>44.4973</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:2270"
+                    minx="3.93694e+06" miny="606789" maxx="4.58841e+06" maxy="1.03425e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="104" height="20">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=clpsap.law_district&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>clpsap.law_beats</Name>
+        <Title>Law Beats</Title>
+        <CRS>EPSG:2270</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-124.27</westBoundLongitude>
+            <eastBoundLongitude>-121.751</eastBoundLongitude>
+            <southBoundLatitude>43.272</southBoundLatitude>
+            <northBoundLatitude>44.4973</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:2270"
+                    minx="3.93694e+06" miny="606789" maxx="4.58841e+06" maxy="1.03425e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="95" height="20">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=clpsap.law_beats&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>clpsap.law_response_plan_areas</Name>
+        <Title>Law Response Plan Areas</Title>
+        <CRS>EPSG:2270</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-124.27</westBoundLongitude>
+            <eastBoundLongitude>-121.751</eastBoundLongitude>
+            <southBoundLatitude>43.272</southBoundLatitude>
+            <northBoundLatitude>44.4973</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:2270"
+                    minx="3.93694e+06" miny="606789" maxx="4.58841e+06" maxy="1.03425e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="184" height="23">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=clpsap.law_response_plan_areas&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>clpsap.tow_zones</Name>
+        <Title>Tow Zones</Title>
+        <CRS>EPSG:2270</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-124.195</westBoundLongitude>
+            <eastBoundLongitude>-121.753</eastBoundLongitude>
+            <southBoundLatitude>43.3945</southBoundLatitude>
+            <northBoundLatitude>44.4973</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:2270"
+                    minx="3.95651e+06" miny="650607" maxx="4.58841e+06" maxy="1.03425e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="98" height="20">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=clpsap.tow_zones&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Curbs</Name>
+        <Title>Street Curbs</Title>
+        <CRS>EPSG:2270</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-123.052</westBoundLongitude>
+            <eastBoundLongitude>-122.885</eastBoundLongitude>
+            <southBoundLatitude>44.0149</southBoundLatitude>
+            <northBoundLatitude>44.0942</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:2270"
+                    minx="4.25083e+06" miny="866046" maxx="4.29399e+06" maxy="893674" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="69" height="20">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Curbs&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>eugnbhd</Name>
+        <Title>Eugene Neighborhoods</Title>
+        <CRS>EPSG:2270</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-123.212</westBoundLongitude>
+            <eastBoundLongitude>-123.029</eastBoundLongitude>
+            <southBoundLatitude>43.9847</southBoundLatitude>
+            <northBoundLatitude>44.1355</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:2270"
+                    minx="4.20929e+06" miny="856326" maxx="4.25587e+06" maxy="909881" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="171" height="23">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=eugnbhd&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>fireprotectionarea1</Name>
+        <Title>City Fire Protection District</Title>
+        <CRS>EPSG:2270</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-124.183</westBoundLongitude>
+            <eastBoundLongitude>-122.036</eastBoundLongitude>
+            <southBoundLatitude>43.6272</southBoundLatitude>
+            <northBoundLatitude>44.3072</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:2270"
+                    minx="3.95651e+06" miny="735506" maxx="4.51496e+06" maxy="966153" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="193" height="23">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=fireprotectionarea1&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+<!-- WARNING: The layer name 'Sanitary Pipe Mains' might contain spaces or invalid characters or may start with a number. This could lead to potential problems. -->
+        <Name>Sanitary Pipe Mains</Name>
+        <Title>Sanitary Mains</Title>
+        <CRS>EPSG:2270</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-123.053</westBoundLongitude>
+            <eastBoundLongitude>-122.888</eastBoundLongitude>
+            <southBoundLatitude>44.0245</southBoundLatitude>
+            <northBoundLatitude>44.0949</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:2270"
+                    minx="4.25046e+06" miny="869550" maxx="4.29319e+06" maxy="893952" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="148" height="23">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Sanitary Pipe Mains&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+<!-- WARNING: The layer name 'Storm Mains' might contain spaces or invalid characters or may start with a number. This could lead to potential problems. -->
+        <Name>Storm Mains</Name>
+        <Title>Storm Mains</Title>
+        <CRS>EPSG:2270</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-123.053</westBoundLongitude>
+            <eastBoundLongitude>-122.88</eastBoundLongitude>
+            <southBoundLatitude>44.0164</southBoundLatitude>
+            <northBoundLatitude>44.0962</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:2270"
+                    minx="4.25068e+06" miny="866604" maxx="4.29527e+06" maxy="894384" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="108" height="20">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Storm Mains&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Street</Name>
+        <Title>Street</Title>
+        <CRS>EPSG:2270</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-124.177</westBoundLongitude>
+            <eastBoundLongitude>-121.796</eastBoundLongitude>
+            <southBoundLatitude>43.3948</southBoundLatitude>
+            <northBoundLatitude>44.3256</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:2270"
+                    minx="3.95828e+06" miny="650662" maxx="4.57715e+06" maxy="971824" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="135" height="20">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Street&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+<!-- WARNING: The layer name 'Maintenance Holes' might contain spaces or invalid characters or may start with a number. This could lead to potential problems. -->
+        <Name>Maintenance Holes</Name>
+        <Title>Maintenance Holes</Title>
+        <CRS>EPSG:2270</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-123.053</westBoundLongitude>
+            <eastBoundLongitude>-122.888</eastBoundLongitude>
+            <southBoundLatitude>44.0245</southBoundLatitude>
+            <northBoundLatitude>44.0949</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:2270"
+                    minx="4.25046e+06" miny="869550" maxx="4.29319e+06" maxy="893952" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="147" height="20">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Maintenance Holes&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>fireprotectionarea</Name>
+        <Title>Rural Fire Protection District</Title>
+        <CRS>EPSG:2270</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-124.183</westBoundLongitude>
+            <eastBoundLongitude>-122.036</eastBoundLongitude>
+            <southBoundLatitude>43.6272</southBoundLatitude>
+            <northBoundLatitude>44.3072</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:2270"
+                    minx="3.95651e+06" miny="735506" maxx="4.51496e+06" maxy="966153" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="86" height="22">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=fireprotectionarea&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+<!-- WARNING: The layer name 'Springfield Building' might contain spaces or invalid characters or may start with a number. This could lead to potential problems. -->
+        <Name>Springfield Building</Name>
+        <Title>Springfield Building</Title>
+        <CRS>EPSG:2270</CRS>
+        <!-- WARNING: Optional Ex_GeographicBoundingBox could not be established for this layer.  Consider setting the EXTENT in the LAYER object, or wms_extent metadata. Also check that your data exists in the DATA statement -->
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="69" height="20">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Springfield Building&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>eugbuilding</Name>
+        <Title>Building Footprint</Title>
+        <CRS>EPSG:2270</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-123.231</westBoundLongitude>
+            <eastBoundLongitude>-122.875</eastBoundLongitude>
+            <southBoundLatitude>43.9669</southBoundLatitude>
+            <northBoundLatitude>44.1497</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:2270"
+                    minx="4.20449e+06" miny="849981" maxx="4.29609e+06" maxy="913869" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="89" height="23">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=eugbuilding&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>citylimits</Name>
+        <Title>City Limits</Title>
+        <CRS>EPSG:2270</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-124.144</westBoundLongitude>
+            <eastBoundLongitude>-122.439</eastBoundLongitude>
+            <southBoundLatitude>43.6911</southBoundLatitude>
+            <northBoundLatitude>44.2478</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:2270"
+                    minx="3.96585e+06" miny="758433" maxx="4.40891e+06" maxy="946710" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="97" height="23">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=citylimits&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+    </Layer>
+  </Layer>
+</Capability>
+</WMS_Capabilities>

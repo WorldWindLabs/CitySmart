@@ -7,7 +7,17 @@ class App extends Component {
 
   constructor(props){
     super(props);
+    this.state = {selectedLayers: [], layerList: []};
   }
+
+  updateAppLayerList(layerList) {
+    this.setState({layerList})
+  }
+
+  handleSelectLayerUI(selectedLayers) {
+      this.setState({ selectedLayers });
+  }
+
 
   render() {
 
@@ -19,17 +29,19 @@ class App extends Component {
       display: 'flex',
       color: '#fff',
       fontFamily: 'Tahoma, Verdana, Segoe, sans-serif'
-      
+
     }
 
     return (
-      
+
         <div style={style}>
-            <SideBar/>
-            <WorldWind/>
+            <SideBar onSelectLayer={this.handleSelectLayerUI.bind(this)}
+              layerList={this.state.layerList}/>
+            <WorldWind selectedLayers={this.state.selectedLayers}
+              updateLayerList={this.updateAppLayerList.bind(this)}/>
         </div>
 
-      
+
     );
   }
 }

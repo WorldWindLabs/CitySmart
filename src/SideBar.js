@@ -1,6 +1,26 @@
 import React, {Component} from 'react';
+import SelectLayer from './SelectLayer.js';
+import 'react-select/dist/react-select.css';
 
 class SideBar extends Component{
+    constructor(props) {
+      super(props);
+      this.state = {selectedLayers: [], layerList: []};
+      this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps) {
+      this.setState({ layerList: nextProps.layerList });
+    }
+
+    componentDidMount() {
+    }
+
+    handleSelectLayer(selectedLayers) {
+        this.setState({ selectedLayers });
+        this.props.onSelectLayer(selectedLayers);
+    }
+
     render(){
         const style = {
             backgroundColor: '#4F628E',
@@ -25,7 +45,7 @@ class SideBar extends Component{
             align: 'center',
             // padding: '10%'
         }
-    
+
         return(
             <div style={style}>
                 <div><img src={require('./DelBiancoLogo.png')} style={imageStyle}/></div>
@@ -41,6 +61,11 @@ class SideBar extends Component{
                     <p>&emsp;+ Servers</p>
                 </h3>
                     &emsp;<input></input> <b>Add</b>
+                <SelectLayer
+                    name="form-field-name"
+                    onChange={this.handleSelectLayer.bind(this)}
+                    layerList={this.state.layerList}
+                />
             </div>
         );
     }
