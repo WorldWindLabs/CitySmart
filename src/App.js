@@ -7,20 +7,19 @@ class App extends Component {
 
   constructor(props){
     super(props);
-    this.state = {selectedLayers: [], layerList: []};
+    this.state = {
+      layersList: [],
+      layersSelected: [],
+      serversList: [],
+      serversSelected: [],
+    };
   }
 
-  updateAppLayerList(layerList) {
-    this.setState({layerList})
+  handleSelect(list) {
+    this.setState(list);
   }
-
-  handleSelectLayerUI(selectedLayers) {
-      this.setState({ selectedLayers });
-  }
-
 
   render() {
-
     const style = {
       width: '100vw',
       height: '100vh',
@@ -35,10 +34,16 @@ class App extends Component {
     return (
 
         <div style={style}>
-            <SideBar onSelectLayer={this.handleSelectLayerUI.bind(this)}
-              layerList={this.state.layerList}/>
-            <WorldWind selectedLayers={this.state.selectedLayers}
-              updateLayerList={this.updateAppLayerList.bind(this)}/>
+            <SideBar onSelectLayer={this.handleSelect.bind(this)}
+              layersList={this.state.layersList}
+              serversSelected={this.state.serversSelected}
+              serversList={this.state.serversList}
+            />
+            <WorldWind layersSelected={this.state.layersSelected}
+              updateLayerList={this.handleSelect.bind(this)}
+              serversSelected={this.state.serversSelected}
+              serversList={this.state.serversList}
+            />
         </div>
 
 

@@ -5,60 +5,102 @@ import wwwOSMLayer from './frontend/wwwOSM.js';
 class WorldWind extends Component{
   constructor(props) {
     super(props);
-    this.state = {selectedLayers: [], layerlist: []};
+    this.state = {
+      layersList: [],
+      layersSelected: [],
+      serversList: [],
+      serversSelected: [],
+    };
     this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.updateWWLayers = this.updateWWLayers.bind(this);
+    this.addServer = this.addServer.bind(this);
+    this.removeServer = this.removeServer.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
-    var list = [];
-    if (nextProps.selectedLayers.length) {
-      nextProps.selectedLayers.split(',').forEach( (index) => {
-        list.push(this.layerList[index].layer);
-      });
-      this.setState({ selectedLayers: list },
+    if (this.props.layersSelected !== nextProps.layersSelected) {
+      var list = [];
+      if (nextProps.layersSelected.length) {
+        nextProps.layersSelected.split(',').forEach( (name) => {
+          list.push(this.layerMap[name].layer);
+        });
+      }
+      this.setState({layersSelected: list},
         () => {
-          console.log(this.state.selectedLayers);
-          console.log(this);
           this.updateWWLayers(list);
         });
     }
+
+    Array.prototype.diff = function(a) {
+      return this.filter(function(b) {
+        for (var i of a) {
+          if (i.value == b.value) {
+            return false;
+          }
+        }
+        return true;
+      });
+    };
+
+    if (this.props.serversSelected !== nextProps.serversSelected) {
+      var old = this.props.serversSelected;
+      // console.log(old);
+      var next = nextProps.serversSelected;
+      // console.log(next);
+
+      var removeList = old.diff(next);
+      // console.log(removeList);
+      removeList.forEach((newServer) => {
+        this.removeServer(newServer.value, newServer.label);
+      });
+
+      var addList = next.diff(old);
+      // console.log(addList);
+      addList.forEach((newServer) => {
+        this.addServer(newServer.value, newServer.label);
+      });
+    }
+
   }
 
   updateWWLayers(newLayersCapsList) {
     function wasLayerRemoved(name) {
+      var result = true;
       newLayersCapsList.forEach( (newLayer) => {
-        if (name == newLayer.name) {
-          return false;
+        if (name == newLayer.title) {
+          result = false;
         }
       });
-      return true;
+      return result;
     }
     var updatedLayerList = [];
     this.serverLayers.forEach( (layer) => {
-        if (wasLayerRemoved(layer.layer.name)){
-          console.log("Removing layer ", layer.layer.name);
+        if (wasLayerRemoved(layer.layer.displayName)){
+          console.log("Removing layer ", layer.layer.displayName);
           this.globe.removeLayer(layer.layer);
-        }
-        else {
-          updatedLayerList.push(layer);
+          this.serverLayers = this.serverLayers.filter( (serverlayer) => {
+              return serverlayer.layer.displayName != layer.layer.displayName;
+          });
+
         }
     });
-    this.serverLayers = updatedLayerList;
 
-    function isNewLayer(name, list) {
-      list.forEach( (oldLayer) => {
-        if (name == oldLayer.layer.name) {
-          return false;
+    var isNewLayer = function(name) {
+      var result = true;
+      this.serverLayers.forEach( (oldLayer) => {
+        if (name == oldLayer.layer.displayName) {
+          result = false;
         }
       });
-      return true;
+      return result;
     }
+    isNewLayer = isNewLayer.bind(this);
+
 
     newLayersCapsList.forEach( (layer) => {
-      if (isNewLayer(layer.name, updatedLayerList)) {
-        console.log("Adding layer ", layer.name)
+      if (isNewLayer(layer.title)) {
+        console.log("Adding layer ", layer.title)
         this.addNewLayerFromCaps(layer);
       }
     });
@@ -66,28 +108,33 @@ class WorldWind extends Component{
 
   addNewLayerFromCaps(layerCaps) {
     const WorldWind = window.WorldWind;
-    console.log(layerCaps);
     var config = WorldWind.WmsLayer.formLayerConfiguration(layerCaps, null);
-    var SpringfieldWmsLayer = {layer: new WorldWind.WmsLayer(config, null), enabled: true};
-    console.log(SpringfieldWmsLayer);
-    SpringfieldWmsLayer.layer.enabled = SpringfieldWmsLayer.enabled;
+    var WmsLayer = {layer: new WorldWind.WmsLayer(config, null), enabled: true};
+    WmsLayer.layer.enabled = WmsLayer.enabled;
 
-    this.serverLayers.push(SpringfieldWmsLayer);
-    this.globe.addLayer(SpringfieldWmsLayer.layer);
+    this.serverLayers.push(WmsLayer);
+    this.globe.addLayer(WmsLayer.layer);
   }
 
-  getLayerList(allLayers) {
+  getLayerList(allLayers, serverName) {
     var layers = [],
          global_index = 0;
-    allLayers.forEach( (group) => {
-      group.layers.forEach( (layer, index) => {
-        layers.push({label: layer.name,
-          value: (global_index + index).toString(),
-          layer: layer,
-        })
-      });
-      global_index += group.layers.length;
-      });
+     if (allLayers.layers) {
+       allLayers.layers.forEach( (sublayer, subindex) => {
+         layers = layers.concat(
+           this.getLayerList(sublayer, serverName));
+       });
+     }
+     else {
+       var layer = allLayers;
+       this.layerMap[layer.title] = {layer, server: serverName};
+       return [{label: layer.title,
+        //  value: (Object.keys(this.layerMap).length - 1).toString(),
+         value: layer.title,
+         layer: layer,
+         server: serverName,
+       }];
+     }
     return layers;
   }
 
@@ -95,63 +142,92 @@ class WorldWind extends Component{
       return false;
   }
 
+  removeServer(serverAddress, label) {
+    console.log("removeServer: to be implemented");
+    var serversSelected = this.props.serversSelected.filter((server) => {
+      return !(server.value == serverAddress && server.label == label);
+    });
+
+    var layersList = this.state.layersList.filter((layer) => {
+      return !(layer.server == label);
+    });
+    this.setState({layersList});
+    this.props.updateLayerList({serversSelected, layersList});
+
+  }
+
+  addServer(serverAddress = 'http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map', label) {
+    // serverAddress = 'neowms.sci.gsfc.nasa.gov/wms/wms';
+    const wwReact = this;
+    const WorldWind = window.WorldWind;
+
+    if (!serverAddress) {
+        return;
+    }
+
+    function buildUrl(serverAddress) {
+      serverAddress = serverAddress.trim();
+
+      serverAddress = serverAddress.replace("Http", "http");
+      if (serverAddress.lastIndexOf("http", 0) != 0) {
+          serverAddress = "http://" + serverAddress;
+      }
+
+      var url = WorldWind.WmsUrlBuilder.fixGetMapString(serverAddress);
+      url += "service=WMS&request=GetCapabilities&vers";
+
+      return url;
+    }
+
+    var url = buildUrl(serverAddress)
+        , request = new XMLHttpRequest();
+
+    // url = 'http://localhost:3000/mapserv.xml';
+    request.open("GET", url, true);
+    request.onreadystatechange = function () {
+        if (request.readyState === 4 && request.status === 200) {
+
+            var xmlDom = request.responseXML;
+
+            if (xmlDom && request.responseText.indexOf("<?xml") === 0) {
+                xmlDom = new window.DOMParser().parseFromString(request.responseText, "text/xml");
+                var wmsCapsDoc = new WorldWind.WmsCapabilities(xmlDom);
+                var layerlist = wwReact.getLayerList(wmsCapsDoc.capability.layers[0] , wmsCapsDoc.service.title);
+                wwReact.setState({layersList: wwReact.state.layersList.concat(layerlist)}, () => {
+                  var serversList = wwReact.props.serversList.map((server) => {
+                    return server.value == serverAddress ?
+                      {...server, label: wmsCapsDoc.service.title} : server;
+                  });
+                  var serversSelected = wwReact.props.serversSelected.map((server) => {
+                    return server.value == serverAddress ?
+                      {...server, label: wmsCapsDoc.service.title} : server;
+                  });
+
+                  wwReact.props.updateLayerList({layersList: wwReact.state.layersList, serversList, serversSelected});
+                });
+            }
+            if (!xmlDom) {
+                alert(serverAddress + " retrieval failed. It is probably not a WMS server.");
+                return;
+            }
+        }
+        else {
+            console.log("didnt work");
+        }
+    };
+    request.send(null);
+  }
+
   componentDidMount(){
       const WorldWind = window.WorldWind;
       const wwReact = this;
       this.serverLayers = [];
+      this.layerMap = {};
       this.globe = new WorldWind.WorldWindow(this.refs.canvasOne.id);
 
       var OpenStreetMapLayer = new WorldWind.OpenStreetMapImageLayer();
       var BingAerialLayer = new WorldWind.BingAerialLayer();
       var serverAddress = 'http://199.79.36.155/cgi-bin/mapserv?map=WorldWind.map';
-
-      function getXMLDom (globe, serverAddress) { // Asynchronously adding layers from Sprinfield's WMS
-          if (!serverAddress) {
-              return;
-          }
-
-          serverAddress = serverAddress.trim();
-
-          serverAddress = serverAddress.replace("Http", "http");
-          if (serverAddress.lastIndexOf("http", 0) != 0) {
-              serverAddress = "http://" + serverAddress;
-          }
-
-          var thisExplorer = this,
-              request = new XMLHttpRequest(),
-              url = WorldWind.WmsUrlBuilder.fixGetMapString(serverAddress);
-
-          url += "service=WMS&request=GetCapabilities&vers";
-
-          // url = 'http://localhost:3000/mapserv.xml';
-          request.open("GET", url, true);
-          console.log(url);
-          request.onreadystatechange = function () {
-              if (request.readyState === 4 && request.status === 200) {
-
-                  var xmlDom = request.responseXML;
-
-                  if (xmlDom && request.responseText.indexOf("<?xml") === 0) {
-                      xmlDom = new window.DOMParser().parseFromString(request.responseText, "text/xml");
-                      var wmsCapsDoc = new WorldWind.WmsCapabilities(xmlDom);
-                      var layerlist = wwReact.getLayerList(wmsCapsDoc.capability.layers);
-                      wwReact.layerList = layerlist;
-                      wwReact.setState({layerlist}, () => {
-                        wwReact.props.updateLayerList(wwReact.state.layerlist);
-                      });
-                      // wwReact.addNewLayerFromCaps(layerlist[0].layer);
-                  }
-                  if (!xmlDom) {
-                      alert(serverAddress + " retrieval failed. It is probably not a WMS server.");
-                      return;
-                  }
-              }
-              else {
-                  console.log("didnt work");
-              }
-          };
-          request.send(null);
-      }
 
       // Switch default (and defunct) OSM tile server from MapQuest to OpenStreetMap test servers
       OpenStreetMapLayer.urlBuilder = {
@@ -195,7 +271,7 @@ class WorldWind extends Component{
       }
 
       // Create Springfield layer from WMS
-      getXMLDom(this.globe, serverAddress);
+      // this.addServer();
 
       // Create 3D buildings
       //wwwOSMLayer(this.globe, WorldWind, OpenStreetMapLayer);

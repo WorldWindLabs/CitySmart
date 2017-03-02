@@ -1,24 +1,35 @@
 import React, {Component} from 'react';
 import SelectLayer from './SelectLayer.js';
+import ServerSelection from './ServerSelection.js';
 import 'react-select/dist/react-select.css';
 
 class SideBar extends Component{
     constructor(props) {
       super(props);
-      this.state = {selectedLayers: [], layerList: []};
+      this.state = {
+        layersList: [],
+        layersSelected: [],
+        serversList: [],
+        serversSelected: [],
+      };
+
       this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
-      this.setState({ layerList: nextProps.layerList });
+      this.setState({
+        layersList: nextProps.layersList,
+        serversList: nextProps.serversList,
+        serversSelected: nextProps.serversSelected,
+      });
     }
 
     componentDidMount() {
     }
 
-    handleSelectLayer(selectedLayers) {
-        this.setState({ selectedLayers });
-        this.props.onSelectLayer(selectedLayers);
+    handleSelect(selected) {
+        this.setState(selected);
+        this.props.onSelectLayer(selected);
     }
 
     render(){
@@ -53,18 +64,18 @@ class SideBar extends Component{
                 {/*Placehoder UI elements*/}
                 &emsp;<input></input> <b>Search</b>
                 <br/>
-                <h3>
-                    <p>&emsp;+ Layers</p>
-                    <h5>&emsp;&emsp; OpenStreetMap</h5>
-                    <h5>&emsp;&emsp; Springfield Fire Reporting</h5>
-                    <br/>
-                    <p>&emsp;+ Servers</p>
-                </h3>
-                    &emsp;<input></input> <b>Add</b>
+                <ServerSelection
+                    label="+ Server"
+                    serversList={this.state.serversList}
+                    serversSelected={this.state.serversSelected}
+                    onChange={this.handleSelect.bind(this)}
+                />
+                <br/><br/>
                 <SelectLayer
                     name="form-field-name"
-                    onChange={this.handleSelectLayer.bind(this)}
-                    layerList={this.state.layerList}
+                    onChange={this.handleSelect.bind(this)}
+                    layerList={this.state.layersList}
+                    label="+ Layer"
                 />
             </div>
         );
