@@ -62,7 +62,7 @@ class SideBar extends Component{
                 <div><img src={require('./DelBiancoLogo.png')} style={imageStyle}/></div>
                 <div style={header}><b>DelBianco</b><br/><h1>CitySmart</h1></div>
                 {/*Placehoder UI elements*/}
-                &emsp;<input></input> <b>Search</b>
+                {/*&emsp;<input></input> <b>Search</b>*/}
                 <br/>
                 <ServerSelection
                     label="+ Server"

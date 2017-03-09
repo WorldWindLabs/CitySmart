@@ -3,6 +3,7 @@ import globals from '../global.js';
 import buildGeometries from './buildGeometries.js';
 
 export default function wwwOSM(wwd, WorldWind, osmLayer) {
+
     /**
      * APIs Endpoint
      * @type {string}
@@ -13,6 +14,26 @@ export default function wwwOSM(wwd, WorldWind, osmLayer) {
     disable Web World Wind logging
      */
     WorldWind.Logger.setLoggingLevel(WorldWind.Logger.LEVEL_NONE);
+
+    /*
+    Building annotations layer
+    */
+    var annotationsLayer = new WorldWind.RenderableLayer("Annotations");
+    wwd.addLayer(annotationsLayer);
+
+    var annotationAttributes = new WorldWind.AnnotationAttributes(null);
+        annotationAttributes.cornerRadius = 14;
+        annotationAttributes.backgroundColor = new WorldWind.Color(.31, .38, .56, 1);
+        annotationAttributes.textColor = new WorldWind.Color(1, 1, 1, 1);
+        annotationAttributes.drawLeader = true;
+        annotationAttributes.leaderGapWidth = 40;
+        annotationAttributes.leaderGapHeight = 30;
+        annotationAttributes.opacity = 1;
+        annotationAttributes.scale = 1;
+        annotationAttributes.width = 200;
+        annotationAttributes.height = 100;
+        annotationAttributes.textAttributes.color = WorldWind.Color.WHITE;
+        annotationAttributes.insets = new WorldWind.Insets(10, 10, 10, 10);
 
     /*
      Layer with the OpenStreetMap geometries
@@ -39,7 +60,7 @@ export default function wwwOSM(wwd, WorldWind, osmLayer) {
      */
     wwd.navigator.lookAtLocation.latitude = 46.06686259487552;
     wwd.navigator.lookAtLocation.longitude = 11.120719683053174;
-    wwd.navigator.range = 170.55557907761514;
+    wwd.navigator.range = 370.55557907761514;
     wwd.navigator.tilt = 61;
 
     /*
@@ -332,8 +353,9 @@ export default function wwwOSM(wwd, WorldWind, osmLayer) {
     }
 
     var highlightedItems = [];
+    
     var handlePick = function (o) {
-        console.log("highlight!!!");
+        //console.log("highlight!!!");
         // The input argument is either an Event or a TapRecognizer. Both have the same properties for determining
         // the mouse or tap location.
         var x = o.clientX,
@@ -350,6 +372,22 @@ export default function wwwOSM(wwd, WorldWind, osmLayer) {
         // Perform the pick. Must first convert from window coordinates to canvas coordinates, which are
         // relative to the upper left corner of the canvas rather than the upper left corner of the page.
         var pickList = wwd.pick(wwd.canvasCoordinates(x, y));
+        
+        var lastObjectPicked = pickList.objects[pickList.objects.length -1];
+        console.log(lastObjectPicked);
+        var annotation = new WorldWind.Annotation(lastObjectPicked.position, annotationAttributes);
+        
+        //TODO: Read this from the database
+        annotation.label = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.";
+        annotation.label += "\n\n Writing a lot of stuff in these balloons";
+        annotation.label += " and then some.";
+        
+        // Remove previous annotation before rendering the new one
+        annotationsLayer.removeAllRenderables();
+        annotationsLayer.addRenderable(annotation);
+        //annotationsLayer.refresh();
+        
+
         if (pickList.objects.length > 0) {
             //console.log(pickList.objects.length+ " objs have been picked");
             redrawRequired = true;
@@ -375,6 +413,7 @@ export default function wwwOSM(wwd, WorldWind, osmLayer) {
 
         // Update the window if we changed anything.
         if (redrawRequired) {
+            
             wwd.redraw(); // redraw to make the highlighting changes take effect on the screen
         }
     };
