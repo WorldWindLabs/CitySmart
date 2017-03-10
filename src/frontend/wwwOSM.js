@@ -232,7 +232,7 @@ export default function wwwOSM(wwd, WorldWind, osmLayer) {
             /**
              * Internal use
              */
-            var do1 = function(tile){ 
+            var do1 = function(tile){
                 storeTile(tile);
                 fun_a(tile);
             }
@@ -353,7 +353,7 @@ export default function wwwOSM(wwd, WorldWind, osmLayer) {
     }
 
     var highlightedItems = [];
-    
+
     var handlePick = function (o) {
         //console.log("highlight!!!");
         // The input argument is either an Event or a TapRecognizer. Both have the same properties for determining
@@ -372,21 +372,70 @@ export default function wwwOSM(wwd, WorldWind, osmLayer) {
         // Perform the pick. Must first convert from window coordinates to canvas coordinates, which are
         // relative to the upper left corner of the canvas rather than the upper left corner of the page.
         var pickList = wwd.pick(wwd.canvasCoordinates(x, y));
-        
+        var osmid = pickList.objects[0].userObject.osmid;
         var lastObjectPicked = pickList.objects[pickList.objects.length -1];
-        console.log(lastObjectPicked);
+        console.log(lastObjectPicked, osmid);
+
+        var showDescriptionPanel = function(osmId){
+          /**
+           * Internal use
+           */
+          var excludeField = function(field){
+              var toExclude = ['modified_on','z_order', 'way_area', 'is_deleted', 'color_fill', 'color_border', 'line_width']
+              for (var i in toExclude){
+                  if (field === toExclude[i]){
+                      return true;
+                  }
+              }
+              return false;
+          }
+
+          if (osmId){
+            var request = new XMLHttpRequest();
+            console.log(endpoint+"/polygon/"+osmId);
+            request.open("GET", endpoint+"/polygon/"+osmId, true);
+            request.onreadystatechange = function () {
+              if (request.readyState === 4 && request.status === 200) {
+                console.log(request);
+                var descriptions = JSON.parse(request.responseText);
+                console.log(descriptions);
+                var label = "Description\n";
+                for (var i in descriptions.properties){
+                  if (!excludeField(i)){
+                      label += i + ': ' +descriptions.properties[i] + '\n';
+                      // $("#obj_description").append('<p>'+i+': '+descriptions.properties[i]+'</p>');
+                  }
+                }
+                console.log(label);
+                annotation.label = label;
+                return label;
+              }
+              else {
+                console.log("didnt work");
+              }
+            };
+            request.send();
+        }
+      }
+
         var annotation = new WorldWind.Annotation(lastObjectPicked.position, annotationAttributes);
-        
+
         //TODO: Read this from the database
-        annotation.label = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.";
-        annotation.label += "\n\n Writing a lot of stuff in these balloons";
-        annotation.label += " and then some.";
-        
-        // Remove previous annotation before rendering the new one
+        var label = showDescriptionPanel(osmid)
+        // console.log(label);
+        // annotation.label = label;
+        // annotation.label = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.";
+        // annotation.label += "\n\n Writing a lot of stuff in these balloons";
+        // annotation.label += " and then some.";
+
+
         annotationsLayer.removeAllRenderables();
-        annotationsLayer.addRenderable(annotation);
-        //annotationsLayer.refresh();
-        
+        // Remove previous annotation before rendering the new one
+        if (!lastObjectPicked.isOnTop) {
+          annotationsLayer.addRenderable(annotation);
+          //annotationsLayer.refresh();
+        }
+
 
         if (pickList.objects.length > 0) {
             //console.log(pickList.objects.length+ " objs have been picked");
@@ -413,11 +462,11 @@ export default function wwwOSM(wwd, WorldWind, osmLayer) {
 
         // Update the window if we changed anything.
         if (redrawRequired) {
-            
+
             wwd.redraw(); // redraw to make the highlighting changes take effect on the screen
         }
     };
-    
+
     wwd.addEventListener("dblclick", handlePick);
 
     /**
@@ -440,4 +489,3 @@ export default function wwwOSM(wwd, WorldWind, osmLayer) {
         return this.charAt(0).toUpperCase() + this.slice(1);
     }
 }
-

@@ -360,7 +360,7 @@ export default function buildGeometries(tile, polygonList, lineList, pointList, 
 
                     if (searchResult) {
                         polygon.visible = true;
-                        shapesLayer.addRenderable(polygon)
+                        shapesLayer.addRenderable(polygon);
                         polygonAttributes.drawOutline = true;
                         polygonAttributes.outlineColor = WorldWind.Color.RED;
                     } else {
