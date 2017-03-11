@@ -380,10 +380,10 @@ export default function wwwOSM(wwd, WorldWind, osmLayer) {
           /**
            * Internal use
            */
-          var excludeField = function(field){
-              var toExclude = ['modified_on','z_order', 'way_area', 'is_deleted', 'color_fill', 'color_border', 'line_width']
-              for (var i in toExclude){
-                  if (field === toExclude[i]){
+          var includeField = function(field){
+              var toInclude = ['name', 'amenity'];
+              for (var i in toInclude){
+                  if (field === toInclude[i]){
                       return true;
                   }
               }
@@ -391,43 +391,61 @@ export default function wwwOSM(wwd, WorldWind, osmLayer) {
           }
 
           if (osmId){
-            var request = new XMLHttpRequest();
-            console.log(endpoint+"/polygon/"+osmId);
-            request.open("GET", endpoint+"/polygon/"+osmId, true);
-            request.onreadystatechange = function () {
-              if (request.readyState === 4 && request.status === 200) {
-                console.log(request);
-                var descriptions = JSON.parse(request.responseText);
+            var request2 = new XMLHttpRequest();
+            console.log(endpoint+"/polygoninfo/"+osmId);
+            request2.open("GET", endpoint+"/polygoninfo/"+osmId, true);
+            request2.onreadystatechange = function () {
+              if (request2.readyState === 4 && request2.status === 200) {
+                var label = "";
+                console.log(request2);
+                var descriptions = JSON.parse(request2.responseText);
                 console.log(descriptions);
-                var label = "Description\n";
-                for (var i in descriptions.properties){
-                  if (!excludeField(i)){
-                      label += i + ': ' +descriptions.properties[i] + '\n';
-                      // $("#obj_description").append('<p>'+i+': '+descriptions.properties[i]+'</p>');
+                if (Object.keys(descriptions).length === 0 && descriptions.constructor === Object) {
+                  var request = new XMLHttpRequest();
+                  console.log(endpoint+"/polygon/"+osmId);
+                  request.open("GET", endpoint+"/polygon/"+osmId, true);
+                  request.onreadystatechange = function () {
+                    console.log("ready");
+                    if (request.readyState === 4 && request.status === 200) {
+                      console.log(request);
+                      var descriptions2 = JSON.parse(request.responseText);
+                      console.log(descriptions2);
+                      if ('name' in descriptions2.properties) {
+                        label += descriptions2.properties['name'] + '\n';
+                        if ('amenity' in descriptions2.properties) {
+                          label += descriptions2.properties['amenity'] + '\n';
+                        }
+                      }
+                      else {
+                        label += osmId.toString();
+                      }
+                      console.log(label);
+                      annotation.label = label;
+                    }
+                  }
+                  request.send();
+                }
+                else {
+                  if ('name' in descriptions) {
+                    label += descriptions.name + '\n';
+                    console.log(label);
+                    annotation.label = label;
+                    return label;
                   }
                 }
-                console.log(label);
-                annotation.label = label;
-                return label;
               }
               else {
                 console.log("didnt work");
               }
-            };
-            request.send();
-        }
+            }
+            request2.send();
+          }
       }
 
         var annotation = new WorldWind.Annotation(lastObjectPicked.position, annotationAttributes);
 
         //TODO: Read this from the database
-        var label = showDescriptionPanel(osmid)
-        // console.log(label);
-        // annotation.label = label;
-        // annotation.label = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.";
-        // annotation.label += "\n\n Writing a lot of stuff in these balloons";
-        // annotation.label += " and then some.";
-
+        var label = showDescriptionPanel(osmid);
 
         annotationsLayer.removeAllRenderables();
         // Remove previous annotation before rendering the new one

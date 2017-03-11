@@ -178,10 +178,10 @@ class WorldWind extends Component{
 
       return url;
     }
-
     var url = buildUrl(serverAddress)
         , request = new XMLHttpRequest();
 
+    console.log(url);
     // url = 'http://localhost:3000/mapserv.xml';
     request.open("GET", url, true);
     request.onreadystatechange = function () {

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import SelectLayer from './SelectLayer.js';
 import ServerSelection from './ServerSelection.js';
+import InfoForm from './InfoForm.js';
 import 'react-select/dist/react-select.css';
 
 class SideBar extends Component{
@@ -77,6 +78,7 @@ class SideBar extends Component{
                     layerList={this.state.layersList}
                     label="+ Layer"
                 />
+              <InfoForm/>
             </div>
         );
     }
