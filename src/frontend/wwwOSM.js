@@ -2,8 +2,8 @@ import $ from 'jquery';
 import globals from '../global.js';
 import buildGeometries from './buildGeometries.js';
 
-export default function wwwOSM(wwd, WorldWind, osmLayer) {
-
+export default function wwwOSM(wwd, WorldWind, osmLayer, wwReact) {
+    console.log("wwOSM");
     /**
      * APIs Endpoint
      * @type {string}
@@ -360,6 +360,10 @@ export default function wwwOSM(wwd, WorldWind, osmLayer) {
         // the mouse or tap location.
         var x = o.clientX,
             y = o.clientY;
+            wwReact.setState({pick: {status: false, osmid: 1}}, () => {
+              console.log(wwReact.state);
+              wwReact.props.updateApp({pick: wwReact.state.pick});
+            });
 
         var redrawRequired = highlightedItems.length > 0; // must redraw if we de-highlight previously picked items
 
@@ -380,36 +384,20 @@ export default function wwwOSM(wwd, WorldWind, osmLayer) {
           /**
            * Internal use
            */
-          var includeField = function(field){
-              var toInclude = ['name', 'amenity'];
-              for (var i in toInclude){
-                  if (field === toInclude[i]){
-                      return true;
-                  }
-              }
-              return false;
-          }
 
           if (osmId){
             var request2 = new XMLHttpRequest();
-            console.log(endpoint+"/polygoninfo/"+osmId);
             request2.open("GET", endpoint+"/polygoninfo/"+osmId, true);
             request2.onreadystatechange = function () {
               if (request2.readyState === 4 && request2.status === 200) {
                 var label = "";
-                console.log(request2);
                 var descriptions = JSON.parse(request2.responseText);
-                console.log(descriptions);
                 if (Object.keys(descriptions).length === 0 && descriptions.constructor === Object) {
                   var request = new XMLHttpRequest();
-                  console.log(endpoint+"/polygon/"+osmId);
                   request.open("GET", endpoint+"/polygon/"+osmId, true);
                   request.onreadystatechange = function () {
-                    console.log("ready");
                     if (request.readyState === 4 && request.status === 200) {
-                      console.log(request);
                       var descriptions2 = JSON.parse(request.responseText);
-                      console.log(descriptions2);
                       if ('name' in descriptions2.properties) {
                         label += descriptions2.properties['name'] + '\n';
                         if ('amenity' in descriptions2.properties) {
@@ -419,7 +407,6 @@ export default function wwwOSM(wwd, WorldWind, osmLayer) {
                       else {
                         label += osmId.toString();
                       }
-                      console.log(label);
                       annotation.label = label;
                     }
                   }
@@ -428,7 +415,6 @@ export default function wwwOSM(wwd, WorldWind, osmLayer) {
                 else {
                   if ('name' in descriptions) {
                     label += descriptions.name + '\n';
-                    console.log(label);
                     annotation.label = label;
                     return label;
                   }
@@ -444,6 +430,12 @@ export default function wwwOSM(wwd, WorldWind, osmLayer) {
 
         var annotation = new WorldWind.Annotation(lastObjectPicked.position, annotationAttributes);
 
+        if (osmid) {
+          wwReact.setState({pick: {status: true, osmid: osmid}}, () => {
+            wwReact.props.updateApp({pick: wwReact.state.pick});
+          });
+        }
+        
         //TODO: Read this from the database
         var label = showDescriptionPanel(osmid);
 

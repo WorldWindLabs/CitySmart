@@ -12,6 +12,10 @@ class App extends Component {
       layersSelected: [],
       serversList: [],
       serversSelected: [],
+      pick: {
+        status: false,
+        osmid: -1
+      },
     };
   }
 
@@ -38,9 +42,10 @@ class App extends Component {
               layersList={this.state.layersList}
               serversSelected={this.state.serversSelected}
               serversList={this.state.serversList}
+              pick={this.state.pick}
             />
             <WorldWind layersSelected={this.state.layersSelected}
-              updateLayerList={this.handleSelect.bind(this)}
+              updateApp={this.handleSelect.bind(this)}
               serversSelected={this.state.serversSelected}
               serversList={this.state.serversList}
             />

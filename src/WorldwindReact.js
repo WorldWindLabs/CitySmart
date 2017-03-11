@@ -10,6 +10,10 @@ class WorldWind extends Component{
       layersSelected: [],
       serversList: [],
       serversSelected: [],
+      pick: {
+        status: false,
+        osmid: 0
+      },
     };
     this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
@@ -152,7 +156,7 @@ class WorldWind extends Component{
       return !(layer.server == label);
     });
     this.setState({layersList});
-    this.props.updateLayerList({serversSelected, layersList});
+    this.props.updateApp({serversSelected, layersList});
 
   }
 
@@ -203,7 +207,7 @@ class WorldWind extends Component{
                       {...server, label: wmsCapsDoc.service.title} : server;
                   });
 
-                  wwReact.props.updateLayerList({layersList: wwReact.state.layersList, serversList, serversSelected});
+                  wwReact.props.updateApp({layersList: wwReact.state.layersList, serversList, serversSelected});
                 });
             }
             if (!xmlDom) {
@@ -274,7 +278,7 @@ class WorldWind extends Component{
       // this.addServer();
 
       // Create 3D buildings
-      wwwOSMLayer(this.globe, WorldWind, OpenStreetMapLayer);
+      wwwOSMLayer(this.globe, WorldWind, OpenStreetMapLayer, wwReact);
 
       //let {initialCenter, zoom} = this.props;
    }

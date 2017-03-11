@@ -12,6 +12,10 @@ class SideBar extends Component{
         layersSelected: [],
         serversList: [],
         serversSelected: [],
+        pick: {
+          status: false,
+          osmid: -1
+        },
       };
 
       this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
@@ -22,6 +26,7 @@ class SideBar extends Component{
         layersList: nextProps.layersList,
         serversList: nextProps.serversList,
         serversSelected: nextProps.serversSelected,
+        pick: nextProps.pick,
       });
     }
 
@@ -78,7 +83,9 @@ class SideBar extends Component{
                     layerList={this.state.layersList}
                     label="+ Layer"
                 />
-              <InfoForm/>
+              <InfoForm
+                pick={this.state.pick}
+              />
             </div>
         );
     }

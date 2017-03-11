@@ -210,8 +210,9 @@ export default function buildGeometries(tile, polygonList, lineList, pointList, 
 
     for (var k in geometries){
         var entry = geometries[k];
-
-        _shapeAttributes.outlineWidth = entry.properties.line_width/2;
+        if(k != 'diff') {
+          _shapeAttributes.outlineWidth = entry.properties.line_width/2;
+        }
 
         if (entry.type === 'Polygon' || entry.type === 'MultiPolygon') {
             for (var i in entry.coordinates) {
