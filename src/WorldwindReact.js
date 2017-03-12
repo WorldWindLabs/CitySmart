@@ -278,7 +278,7 @@ class WorldWind extends Component{
       // this.addServer();
 
       // Create 3D buildings
-      wwwOSMLayer(this.globe, WorldWind, OpenStreetMapLayer, wwReact);
+      // wwwOSMLayer(this.globe, WorldWind, OpenStreetMapLayer, wwReact);
 
       //let {initialCenter, zoom} = this.props;
    }
