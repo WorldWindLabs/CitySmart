@@ -13,7 +13,8 @@ var ServerSelection = React.createClass({
 			options: [
 				{ value: 'neowms.sci.gsfc.nasa.gov/wms/wms', label: 'test' },
 				// { value: 'http://localhost:3000/mapserv.xml', label: 'Springfield-Eugene PSAP Data' },
-				{ value: 'http://localhost:3000/mapserv.xml', label: 'http://localhost:3000/mapserv.xml' },
+				{ value: 'hhttp://gaia.inegi.org.mx/NLB/mdm5.wms', label: 'INEGI Mexico' },
+				{value: ''}
 			],
 		};
 	},

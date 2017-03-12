@@ -178,8 +178,10 @@ class WorldWind extends Component{
 
       return url;
     }
-    var url = buildUrl(serverAddress)
-        , request = new XMLHttpRequest();
+    // var url = buildUrl(serverAddress)
+    //     , request = new XMLHttpRequest();
+    var url = "http://gaia.inegi.org.mx/NLB/mdm5.wms?service=wms&version=1.1.1&request=GetCapabilities",
+     request = new XMLHttpRequest();
 
     console.log(url);
     // url = 'http://localhost:3000/mapserv.xml';
@@ -212,7 +214,8 @@ class WorldWind extends Component{
             }
         }
         else {
-            console.log("didnt work");
+            console.log("didn't work. Request ready state: " + request.readyState + " Status: " + request.status);
+            console.log(request.responseXML);
         }
     };
     request.send(null);
@@ -272,9 +275,9 @@ class WorldWind extends Component{
 
       // Create Springfield layer from WMS
       // this.addServer();
-
+      
       // Create 3D buildings
-      wwwOSMLayer(this.globe, WorldWind, OpenStreetMapLayer);
+      // wwwOSMLayer(this.globe, WorldWind, OpenStreetMapLayer);
 
       //let {initialCenter, zoom} = this.props;
    }
