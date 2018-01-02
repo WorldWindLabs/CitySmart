@@ -48,4 +48,4 @@ var ServerSelection = React.createClass({
 	}
 });
 
-module.exports = ServerSelection;
+export default ServerSelection;

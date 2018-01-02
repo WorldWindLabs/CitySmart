@@ -33,4 +33,4 @@ var SelectLayer = React.createClass({
 	}
 });
 
-module.exports = SelectLayer;
+export default SelectLayer;
