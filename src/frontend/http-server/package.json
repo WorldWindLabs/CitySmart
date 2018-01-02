@@ -58,19 +58,19 @@
     }
   ],
   "dependencies": {
-    "colors": "1.0.3",
+    "colors": "1.1.2",
     "corser": "^2.0.1",
-    "ecstatic": "^1.4.1",
+    "ecstatic": "^3.1.1",
     "http-proxy": "^1.16.2",
     "opener": "^1.4.3",
     "optimist": "^0.6.1",
-    "portfinder": "^0.4.0",
+    "portfinder": "^1.0.13",
     "union": "^0.4.6"
   },
   "devDependencies": {
     "common-style": "^3.0.0",
-    "request": "2.49.x",
-    "vows": "0.7.x"
+    "request": "2.83.x",
+    "vows": "0.8.x"
   },
   "bugs": {
     "url": "https://github.com/nodeapps/http-server/issues"
